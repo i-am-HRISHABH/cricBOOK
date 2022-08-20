@@ -4,6 +4,7 @@ import Setting from "./Components/SettingPage/Setting";
 import Batting from "./Components/BattingPage/Batting";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState } from "react";
+import Bowling from "./Components/BowlingPage/Bowling";
 
 function App() {
   const [mainTeam, setMainTeam] = useState([]);
@@ -17,10 +18,11 @@ function App() {
         <Navbar />
         <Routes>
           <Route
-            path="/"
+            path="/error"
             element={<Setting appPlayerArray={appPlayerArray} />}
           />
           <Route path="/batting" element={<Batting team={mainTeam} />} />
+          <Route path="/" element={<Bowling />} />
         </Routes>
       </Router>
     </div>

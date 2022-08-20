@@ -1,0 +1,77 @@
+.ball-wrapper {
+  display: flex;
+  flex-direction: column;
+  /* background: rebeccapurple; */
+  justify-content: space-between;
+}
+.ball-top {
+  display: flex;
+  /* background-color: green; */
+  margin-top: 4rem;
+}
+.ball-left {
+  flex: 1;
+  /* background: yellow; */
+}
+
+.ball-team {
+  height: 65vh;
+  width: 80%;
+  background: var(--darkblue);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+.ball-team > :nth-child(1) {
+  margin-top: 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+.ball-team-item {
+  border: 1px solid white;
+  width: 85%;
+  text-align: center;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+}
+.ball-team-item > :nth-child(1) {
+  /* background-color: var(--pinkred); */
+  width: 90%;
+  display: flex;
+}
+.ball-right {
+  flex: 3;
+  /* background: orange; */
+}
+.ball-right > :nth-child(2) {
+  /* background: yellow; */
+  margin-left: 15rem;
+  /* background: orange; */
+}
+.ball-footer {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  width: 95.8vw;
+  background: var(--pinkred);
+  color: white;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 2rem;
+}
+.ball-footer > :nth-child(1) {
+  font-size: 3rem;
+  font-weight: bold;
+}
+.ball-footer > :nth-child(2) {
+  font-size: 1.5rem;
+}
+.ball-footer > :nth-child(3) {
+  font-size: 3rem;
+  font-weight: bold;
+}
