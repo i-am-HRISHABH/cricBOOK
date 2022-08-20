@@ -27,9 +27,9 @@
 .cbl-ball {
   background: var(--darkblue);
   color: white;
-  font-size: 1.3rem;
+  font-size: 0.8rem;
   height: 2rem;
-  width: 2rem;
+  width: 2.2rem;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -45,5 +45,13 @@
 }
 .cbl-lower > :nth-child(2) {
   font-size: 2rem;
+  font-weight: 600;
+}
+.cbl-lower-stat {
+  /* background: green; */
+  font-size: 1.1rem;
+  /* font-weight: 600; */
+}
+.cbl-lower-stat > div > span {
   font-weight: 600;
 }

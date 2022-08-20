@@ -212,6 +212,10 @@ const noSelect = {
 
 let last_over_index = -1;
 let alluarray = [];
+let thisOverRunBall = {
+  runs: 0,
+  balls: 0,
+};
 
 const Bowling = () => {
   //NORMAL VARIABLES
@@ -232,7 +236,7 @@ const Bowling = () => {
   const [oppwicket, setOppwicket] = useState(0);
   const [over, setOver] = useState(0);
   const [overBall, setOverBall] = useState(0);
-  const [thisOver, setthisOver] = useState(["1", "2"]);
+  const [thisOver, setthisOver] = useState([]);
   //FUNCTIONS
   //function to set current bowler
   const setCurrentBowler = (e) => {
@@ -253,9 +257,10 @@ const Bowling = () => {
   //function to handle event button click
   const eventButtonClicked = (e) => {
     if (cbindex > -1) {
+      setthisOver([...thisOver, e.target.innerHTML]);
       setBowlerstats(e.target.innerHTML);
+      thisOverRunBallUpdate(e.target.innerHTML);
       proceedOvers(e.target.innerHTML);
-      // setthisOver([...thisOver, e.target.innerHTML]);
       let clickedRun = Number(e.target.innerHTML);
       if (clickedRun >= 0) {
         setOppscore(oppscore + clickedRun);
@@ -329,7 +334,7 @@ const Bowling = () => {
     if (val.indexOf("wd") === 0 || val.indexOf("nb") === 0) {
       ballTeam[cbindex].runs_given += 1;
     }
-    if (val.indexOf("wk") === 0) {
+    if (val.indexOf("wk") === 0 || val === "wdwk") {
       ballTeam[cbindex].wickets += 1;
     }
   };
@@ -339,14 +344,13 @@ const Bowling = () => {
     if (val.indexOf("wd") === 0 || val.indexOf("nb") === 0) {
     } else {
       if (overBall === 5) {
+        thisOverRunBall.runs = 0;
+        thisOverRunBall.balls = 0;
         setthisOver([]);
         setOverBall(0);
         setOver(over + 1);
         ballTeam[cbindex].overs += 1;
         ballTeam[cbindex].last_over = true;
-
-        console.log("thisOver: " + thisOver);
-        // alert("thisover length: " + thisOver.length);
         if (last_over_index > -1) {
           ballTeam[last_over_index].last_over = false;
         }
@@ -354,6 +358,42 @@ const Bowling = () => {
         setCbindex(-1);
       } else {
         setOverBall(overBall + 1);
+      }
+    }
+  };
+
+  //function to upate thisOverRunBall
+  const thisOverRunBallUpdate = (val) => {
+    if (Number(val) >= 0) {
+      thisOverRunBall.runs += Number(val);
+      thisOverRunBall.balls += 1;
+    } else {
+      if (val === "wd" || val === "nb") {
+        thisOverRunBall.runs += 1;
+      } else if (val === "wd1" || val === "nb1") {
+        thisOverRunBall.runs += 2;
+      } else if (val === "wd2" || val === "nb2") {
+        thisOverRunBall.runs += 3;
+      } else if (val === "wd3" || val === "nb3") {
+        thisOverRunBall.runs += 4;
+      } else if (val === "wd4" || val === "nb4") {
+        thisOverRunBall.runs += 5;
+      } else if (val === "nb6") {
+        thisOverRunBall.runs += 7;
+      } else if (val === "lb1") {
+        thisOverRunBall.runs += 1;
+        thisOverRunBall.balls += 1;
+      } else if (val === "lb2") {
+        thisOverRunBall.runs += 2;
+        thisOverRunBall.balls += 1;
+      } else if (val === "lb3") {
+        thisOverRunBall.runs += 3;
+        thisOverRunBall.balls += 1;
+      } else if (val === "lb4") {
+        thisOverRunBall.runs += 4;
+        thisOverRunBall.balls += 1;
+      } else if (val === "wk") {
+        thisOverRunBall.balls += 1;
       }
     }
   };
@@ -377,7 +417,9 @@ const Bowling = () => {
                       : {}
                   }
                 >
-                  <div onClick={setCurrentBowler}>{p.name}</div>
+                  <div onClick={!p.last_over ? setCurrentBowler : {}}>
+                    {p.name}
+                  </div>
                   <div>
                     {p.overs}/{p.runs_given}/{p.wickets}
                   </div>
@@ -392,6 +434,7 @@ const Bowling = () => {
             <CurrentBowler
               currentBowler={cbindex === -1 ? noSelect : ballTeam[cbindex]}
               currentOver={thisOver.length === 0 ? defaultOver : thisOver}
+              runball={thisOverRunBall}
             />
           </div>
           <div className="bat-heading">Event</div>
@@ -418,7 +461,7 @@ const Bowling = () => {
               <button className="bat-button">lb4</button>
             </div>
             <div className="bat-button-group">
-              <button className="bat-button">0</button>
+              <button className="bat-button">&larr;</button>
               <button className="bat-button">nb</button>
               <button className="bat-button">nb1</button>
               <button className="bat-button">nb2</button>

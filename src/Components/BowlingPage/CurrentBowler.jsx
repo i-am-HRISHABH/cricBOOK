@@ -13,14 +13,24 @@ const CurrentBowler = (props) => {
         })}
       </div>
       <div className="cbl-lower">
-        <div className="cbl-lower-left">
-          <div>Over: {props.currentBowler.overs}</div>
-          <div>Run: {props.currentBowler.runs_given}</div>
+        <div className="cbl-lower-stat">
+          <div>
+            Over: <span> {props.currentBowler.overs} </span>
+          </div>
+          <div>
+            Run: <span> {props.currentBowler.runs_given}</span>
+          </div>
         </div>
-        <div className="cbl-lower-middle">11(5)</div>
-        <div className="cbl-lower-right">
-          <div>Economy : {props.currentBowler.economy}</div>
-          <div>Wicket : {props.currentBowler.wickets}</div>
+        <div className="cbl-lower-middle">
+          {props.runball.runs}({props.runball.balls})
+        </div>
+        <div className="cbl-lower-stat">
+          <div>
+            Economy : <span>{props.currentBowler.economy}</span>
+          </div>
+          <div>
+            Wicket : <span>{props.currentBowler.wickets}</span>{" "}
+          </div>
         </div>
       </div>
     </div>
