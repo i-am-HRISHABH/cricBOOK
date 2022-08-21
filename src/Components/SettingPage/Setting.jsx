@@ -22,9 +22,10 @@ const Setting = (props) => {
 
   const handleOverChange = (event) => {
     let tumtum = event.target.value;
-    if (tumtum.length > 2) {
-      alert("tera baap khelega itna lamba match");
-      setOvers("");
+    if (tumtum > 20) {
+      alert("over limit is 20 overs only");
+      event.target.value = 0;
+      setOvers(0);
     } else {
       setOvers(`${tumtum}`);
     }
@@ -43,12 +44,23 @@ const Setting = (props) => {
   const startGame = (e) => {
     e.preventDefault();
     if (validateFields()) {
-      // console.log("value: " + validateFields());
-      props.appPlayerArray(teamArray);
-      navigate("/batting");
+      let detailObj = {
+        tossValue: toss,
+        selectedToValue: selectedTo,
+        overValue: overs,
+        teamNameValue: teamName,
+        target: 4000,
+      };
+      props.appPlayerArray(teamArray, detailObj);
+      if (selectedTo === "BAT") {
+        navigate("/batting");
+      } else if (selectedTo === "BOWL") {
+        navigate("/bowling");
+      } else {
+        alert("selectedTo field only takes bat/bowl input");
+      }
     } else {
       alert("Fill all details");
-      // navigate("/batting");
     }
   };
 
@@ -78,9 +90,11 @@ const Setting = (props) => {
         name: playerName.value,
         runs_made: 0,
         balls_face: 0,
+        balls_bowled: 0,
         fours: 0,
         sixes: 0,
         out: false,
+        last_over: false,
         dot_ball: 0,
         strike_rate: 0.0,
         overs: 0,
@@ -144,6 +158,7 @@ const Setting = (props) => {
               <input
                 type="text"
                 name="toss"
+                placeholder="won/lost"
                 onChange={handleTossChange}
               ></input>
             </div>
@@ -160,6 +175,7 @@ const Setting = (props) => {
               <input
                 type="text"
                 name="selected"
+                placeholder="bat/bowl"
                 onChange={handleSelectedToChange}
               ></input>
             </div>

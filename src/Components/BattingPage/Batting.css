@@ -7,10 +7,15 @@
 .bat-top {
   display: flex;
   margin-top: 4rem;
+  /* background: yellow; */
 }
 
 .bat-top-left {
   flex: 1;
+  /* background: orangered; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .bat-team {
@@ -111,6 +116,7 @@
   display: flex;
   gap: 2rem;
   margin-top: 1rem;
+  /* background: greenyellow; */
 }
 .bat-button {
   height: 5rem;
@@ -141,4 +147,16 @@
 .bat-supreme-button:hover {
   color: white;
   background-color: var(--pinkred);
+}
+.next-button {
+  width: 10rem;
+  background: var(--darkblue);
+  border: none;
+  color: white;
+  position: absolute;
+  right: 0;
+  bottom: 7.5rem;
+  height: 5rem;
+  font-size: 1.5rem;
+  font-weight: bold;
 }

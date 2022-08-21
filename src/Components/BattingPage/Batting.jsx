@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import CurrentBatsman from "../CurrentBatsman/CurrentBatsman";
 import "./Batting.css";
+import { useNavigate } from "react-router-dom";
 
 const ploya = [
   {
@@ -189,7 +190,18 @@ const blank_player = {
 let onSktrike = 1;
 
 const Batting = (props) => {
+  //NAVIGSTION
+  let navigate = useNavigate();
   //NORMAL VARIABLES
+  const totalOvers = Number(props.matchDetail.overValue);
+  const teamName = props.matchDetail.teamNameValue;
+  const toss = props.matchDetail.tossValue;
+  const selectedTo = props.matchDetail.selectedToValue;
+  const targetrun = props.matchDetail.target;
+  const footerString =
+    props.matchDetail.target === 4000
+      ? props.matchDetail.teamNameValue
+      : `${props.matchDetail.teamNameValue} need ${props.matchDetail.target} runs to win`;
   const selectedStyle = {
     color: "var(--darkblue)",
     background: "white",
@@ -240,10 +252,10 @@ const Batting = (props) => {
 
   //2) event button click updating scor eand player
   const eventButtonClick = (e) => {
-    if (cp1index > -1 && cp2index > -1) {
+    if (cp1index > -1 && cp2index > -1 && validate()) {
       let clickedRun = Number(e.target.innerHTML);
-      proceedOver(e.target.innerHTML);
       changePlayerstats(e.target.innerHTML);
+      proceedOver(e.target.innerHTML);
       if (clickedRun >= 0) {
         setScore(score + clickedRun);
       } else {
@@ -401,6 +413,57 @@ const Batting = (props) => {
     }
   };
 
+  //function to move to next
+  const next = () => {
+    if (
+      overcompleted === totalOvers ||
+      wicket_fallen === 10 ||
+      score > targetrun
+    ) {
+      let movetoStats = false;
+      for (let i = 10; i >= 0; i--) {
+        if (theTeam[i].overs > 0) {
+          movetoStats = true;
+          break;
+        }
+      }
+      let detailObj = {
+        tossValue: toss,
+        selectedToValue: selectedTo,
+        overValue: totalOvers,
+        teamNameValue: teamName,
+        target: score,
+      };
+      props.appPlayerArray(theTeam, detailObj);
+      if (movetoStats) {
+        let resultObj = {
+          result: score > targetrun ? "WON" : "LOST",
+        };
+        props.statSetterFunction(theTeam, resultObj);
+        navigate("/statistics");
+      } else {
+        navigate("/bowling");
+      }
+    } else {
+      alert("dhat teri maa ki chut");
+    }
+  };
+
+  //function to validate field
+  const validate = () => {
+    if (
+      overcompleted === totalOvers ||
+      wicket_fallen === 10 ||
+      score > targetrun
+    ) {
+      alert("You can move to next segment by clicking next!");
+      return false;
+    } else {
+      // alert("You can move to next segment by clicking next!");
+      return true;
+    }
+  };
+
   return (
     <div className="bat-wrapper">
       <div className="bat-top">
@@ -485,11 +548,14 @@ const Batting = (props) => {
         <div className="bat-score">
           {score}/{wicket_fallen}
         </div>
-        <div className="bat-teamName">Santoshi XI</div>
+        <div className="bat-teamName">{footerString}</div>
         <div className="bat-overs">
           {overcompleted}.{overBall}
         </div>
       </div>
+      <button className="next-button" onClick={next}>
+        next
+      </button>
     </div>
   );
 };

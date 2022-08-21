@@ -12,6 +12,9 @@
 .ball-left {
   flex: 1;
   /* background: yellow; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .ball-team {

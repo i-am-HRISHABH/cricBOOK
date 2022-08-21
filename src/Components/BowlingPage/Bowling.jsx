@@ -2,6 +2,7 @@ import React from "react";
 import "./Bowling.css";
 import CurrentBowler from "./CurrentBowler";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const ploya = [
   {
@@ -217,8 +218,19 @@ let thisOverRunBall = {
   balls: 0,
 };
 
-const Bowling = () => {
+const Bowling = (props) => {
+  //NAVIGSTION
+  let navigate = useNavigate();
   //NORMAL VARIABLES
+  const totalOvers = Number(props.matchDetail.overValue);
+  const teamName = props.matchDetail.teamNameValue;
+  const toss = props.matchDetail.tossValue;
+  const selectedTo = props.matchDetail.selectedToValue;
+  const targetrun = props.matchDetail.target;
+  const footerString =
+    props.matchDetail.target === 4000
+      ? props.matchDetail.teamNameValue
+      : `${props.matchDetail.teamNameValue} need to save ${props.matchDetail.target} runs`;
   const selectedStyle = {
     color: "var(--darkblue)",
     background: "white",
@@ -231,7 +243,7 @@ const Bowling = () => {
 
   //STATE VARIABLE
   const [cbindex, setCbindex] = useState(-1);
-  const [ballTeam, setBallTeam] = useState(ploya);
+  const [ballTeam, setBallTeam] = useState(props.team);
   const [oppscore, setOppscore] = useState(0);
   const [oppwicket, setOppwicket] = useState(0);
   const [over, setOver] = useState(0);
@@ -256,7 +268,7 @@ const Bowling = () => {
   };
   //function to handle event button click
   const eventButtonClicked = (e) => {
-    if (cbindex > -1) {
+    if (cbindex > -1 && validate()) {
       setthisOver([...thisOver, e.target.innerHTML]);
       setBowlerstats(e.target.innerHTML);
       thisOverRunBallUpdate(e.target.innerHTML);
@@ -398,6 +410,47 @@ const Bowling = () => {
     }
   };
 
+  //function to move next
+  const next = () => {
+    if (over === totalOvers || oppwicket === 10 || oppscore > targetrun) {
+      let movetoStats = false;
+      for (let i = 0; i < 11; i++) {
+        if (ballTeam[i].balls_face > 0) {
+          movetoStats = true;
+          break;
+        }
+      }
+      let detailObj = {
+        tossValue: toss,
+        selectedToValue: selectedTo,
+        overValue: totalOvers,
+        teamNameValue: teamName,
+        target: oppscore,
+      };
+      props.appPlayerArray(ballTeam, detailObj);
+      if (movetoStats) {
+        let resultObj = {
+          result: oppscore > targetrun ? "LOST" : "WON",
+        };
+        props.statSetterFunction(ballTeam, resultObj);
+        navigate("/statistics");
+      } else {
+        navigate("/batting");
+      }
+    } else {
+      alert("dhat teri maa ki chut");
+    }
+  };
+  //validate function to check should event occur or not
+  const validate = () => {
+    if (over === totalOvers || oppwicket === 10 || oppscore > targetrun) {
+      alert("You can move to next segment by clicking next!");
+      return false;
+    } else {
+      return true;
+    }
+  };
+
   return (
     <div className="ball-wrapper">
       <div className="ball-top">
@@ -437,7 +490,7 @@ const Bowling = () => {
               runball={thisOverRunBall}
             />
           </div>
-          <div className="bat-heading">Event</div>
+          <div className="bat-heading">events</div>
           <div className="bat-buttons" onClick={eventButtonClicked}>
             <div className="bat-button-group">
               <button className="bat-button">0</button>
@@ -478,12 +531,15 @@ const Bowling = () => {
           <div className="ball-score">
             {oppscore}/{oppwicket}
           </div>
-          <div className="ball-teamName">Santoshi XI</div>
+          <div className="ball-teamName">{footerString}</div>
           <div className="ball-overs">
             {over}.{overBall}
           </div>
         </div>
       </div>
+      <button className="next-button" onClick={next}>
+        next
+      </button>
     </div>
   );
 };
