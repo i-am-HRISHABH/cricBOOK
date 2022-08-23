@@ -34,7 +34,7 @@
   cursor: pointer;
 }
 
-.n-right > ul :nth-child(2) {
+/* .n-right > ul :nth-child(1) {
   color: var(--pinkred);
   border-bottom: 4px solid var(--pinkred);
-}
+} */

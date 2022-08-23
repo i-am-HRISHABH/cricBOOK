@@ -262,7 +262,7 @@ const Batting = (props) => {
         switch (e.target.innerHTML) {
           case "wk":
             setWF(wicket_fallen + 1);
-            handlewicketFall();
+            // handlewicketFall();
             break;
           case "wd":
             setScore(score + 1);
@@ -316,7 +316,7 @@ const Batting = (props) => {
           case "wdwk":
             setScore(score + 1);
             setWF(wicket_fallen + 1);
-            handlewicketFall();
+            // handlewicketFall();
             break;
         }
       }
@@ -338,9 +338,9 @@ const Batting = (props) => {
       if (run === 6) {
         theTeam[givePlayer(onSktrike)].sixes += 1;
       }
-      if (run % 2 !== 0) {
-        changeOnSkrite();
-      }
+      // if (run % 2 !== 0) {
+      //   changeOnSkrite();
+      // }
     } else {
       switch (val) {
         case "nb1":
@@ -363,6 +363,12 @@ const Batting = (props) => {
           theTeam[givePlayer(onSktrike)].runs_made += 6;
           theTeam[givePlayer(onSktrike)].sixes += 1;
           break;
+        case "wk":
+          handlewicketFall();
+          break;
+        case "wdwk":
+          handlewicketFall();
+          break;
       }
     }
   };
@@ -373,6 +379,9 @@ const Batting = (props) => {
     if (nb === 0 || wd === 0) {
     } else {
       theTeam[givePlayer(onSktrike)].balls_face += 1;
+      if (Number(val) ? (Number(val) % 2 !== 0 ? true : false) : false) {
+        changeOnSkrite();
+      }
       if (overBall === 5) {
         setOverBall(0);
         let temp = overcompleted + 1;
@@ -389,6 +398,11 @@ const Batting = (props) => {
     alert("Player has been dissmissed by bowlers.");
     // setWF(wicket_fallen + 1);
     theTeam[givePlayer(onSktrike)].out = true;
+    // theTeam[givePlayer(onSktrike)].strike_rate = Math.round(
+    //   (theTeam[givePlayer(onSktrike)].runs_made /
+    //     theTeam[givePlayer(onSktrike)].runs_made) *
+    //     100
+    // );
     if (onSktrike == 1) {
       setcp1index(-1);
     } else {
@@ -440,12 +454,14 @@ const Batting = (props) => {
           result: score > targetrun ? "WON" : "LOST",
         };
         props.statSetterFunction(theTeam, resultObj);
+        props.indexSetter(3);
         navigate("/statistics");
       } else {
+        props.indexSetter(2);
         navigate("/bowling");
       }
     } else {
-      alert("dhat teri maa ki chut");
+      alert("cannot move to next section");
     }
   };
 
@@ -553,7 +569,15 @@ const Batting = (props) => {
           {overcompleted}.{overBall}
         </div>
       </div>
-      <button className="next-button" onClick={next}>
+      <button
+        className="next-button"
+        onClick={next}
+        style={
+          overcompleted < totalOvers && wicket_fallen < 10 && score <= targetrun
+            ? { background: "white" }
+            : {}
+        }
+      >
         next
       </button>
     </div>

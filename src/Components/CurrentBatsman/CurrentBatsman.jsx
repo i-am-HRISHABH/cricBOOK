@@ -5,6 +5,9 @@ const CurrentBatsman = (props) => {
   const CurrentBatsmanSadow = {
     boxShadow: "-6px 7px 20px 0.5px rgba(0, 0, 0, 0.2)",
   };
+  const strikeRate = Math.round(
+    (props.playerObj.runs_made / props.playerObj.balls_face) * 100
+  );
   return (
     <div className="cb-wrapper" style={props.shadow ? CurrentBatsmanSadow : {}}>
       <div className="cb-name">{props.playerObj.name}</div>
@@ -18,9 +21,7 @@ const CurrentBatsman = (props) => {
         </div>
         <div className="cb-stats-right">
           <p className="eat-margin">dot balls: {props.playerObj.dot_ball}</p>
-          <p className="eat-margin">
-            Strike rate: {props.playerObj.strike_rate}
-          </p>
+          <p className="eat-margin">Strike rate: {strikeRate}</p>
         </div>
       </div>
     </div>

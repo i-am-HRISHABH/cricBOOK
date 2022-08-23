@@ -53,8 +53,10 @@ const Setting = (props) => {
       };
       props.appPlayerArray(teamArray, detailObj);
       if (selectedTo === "BAT") {
+        props.indexSetter(1);
         navigate("/batting");
       } else if (selectedTo === "BOWL") {
+        props.indexSetter(2);
         navigate("/bowling");
       } else {
         alert("selectedTo field only takes bat/bowl input");
@@ -96,11 +98,9 @@ const Setting = (props) => {
         out: false,
         last_over: false,
         dot_ball: 0,
-        strike_rate: 0.0,
         overs: 0,
         runs_given: 0,
         wickets: 0,
-        economy: 0.0,
       };
       setteamArray([...teamArray, obj]);
       playerName.value = "";

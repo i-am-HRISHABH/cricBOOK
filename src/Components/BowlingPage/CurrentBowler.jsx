@@ -3,7 +3,10 @@ import "./CurrentBowler.css";
 
 const CurrentBowler = (props) => {
   const overGhatna = props.currentOver;
-
+  const econ = Math.round(
+    props.currentBowler.runs_given / (props.currentBowler.balls_bowled / 6)
+  );
+  console.log("economy is: " + econ);
   return (
     <div className="cbl-wrapper">
       <div className="cbl-name">{props.currentBowler.name}</div>
@@ -26,7 +29,7 @@ const CurrentBowler = (props) => {
         </div>
         <div className="cbl-lower-stat">
           <div>
-            Economy : <span>{props.currentBowler.economy}</span>
+            Economy : <span>{econ}</span>
           </div>
           <div>
             Wicket : <span>{props.currentBowler.wickets}</span>{" "}

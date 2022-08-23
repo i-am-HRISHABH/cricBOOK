@@ -349,6 +349,9 @@ const Bowling = (props) => {
     if (val.indexOf("wk") === 0 || val === "wdwk") {
       ballTeam[cbindex].wickets += 1;
     }
+    if (val.indexOf("wd") !== 0 && val.indexOf("nb") !== 0) {
+      ballTeam[cbindex].balls_bowled += 1;
+    }
   };
 
   //function to proceed overs
@@ -433,8 +436,10 @@ const Bowling = (props) => {
           result: oppscore > targetrun ? "LOST" : "WON",
         };
         props.statSetterFunction(ballTeam, resultObj);
+        props.indexSetter(3);
         navigate("/statistics");
       } else {
+        props.indexSetter(1);
         navigate("/batting");
       }
     } else {
@@ -537,7 +542,15 @@ const Bowling = (props) => {
           </div>
         </div>
       </div>
-      <button className="next-button" onClick={next}>
+      <button
+        className="next-button"
+        onClick={next}
+        style={
+          over < totalOvers && oppwicket < 10 && oppscore <= targetrun
+            ? { background: "white" }
+            : {}
+        }
+      >
         next
       </button>
     </div>

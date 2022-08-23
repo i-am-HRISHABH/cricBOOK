@@ -10,26 +10,37 @@ import Stats from "./Components/StatisticPage/Stats";
 function App() {
   const [mainTeam, setMainTeam] = useState([]);
   const [matchSettings, setMS] = useState({});
+  let [index, setIndex] = useState(0);
   const appPlayerArray = (playerArray, matchDetailObj) => {
     console.log(playerArray);
     console.log(matchDetailObj);
+    // setIndex(1);
     setMainTeam(playerArray);
     setMS(matchDetailObj);
   };
   const statFunction = (playerArray, resultObj) => {
     console.log("final teamList: " + playerArray);
     console.log("result object: " + resultObj);
+    // setIndex(3);
     setMainTeam(playerArray);
     setMS(resultObj);
+  };
+  const indexSetter = (i) => {
+    setIndex(i);
   };
   return (
     <div>
       <Router>
-        <Navbar />
+        <Navbar index={index} />
         <Routes>
           <Route
             path="/"
-            element={<Setting appPlayerArray={appPlayerArray} />}
+            element={
+              <Setting
+                appPlayerArray={appPlayerArray}
+                indexSetter={indexSetter}
+              />
+            }
           />
           <Route
             path="/batting"
@@ -39,6 +50,7 @@ function App() {
                 matchDetail={matchSettings}
                 appPlayerArray={appPlayerArray}
                 statSetterFunction={statFunction}
+                indexSetter={indexSetter}
               />
             }
           />
@@ -50,6 +62,7 @@ function App() {
                 matchDetail={matchSettings}
                 appPlayerArray={appPlayerArray}
                 statSetterFunction={statFunction}
+                indexSetter={indexSetter}
               />
             }
           />

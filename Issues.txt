@@ -1,0 +1,10 @@
+1) double popup on 10 wicket before over completion.
+ change the next bowler popup
+
+2)done single and triple  button updates balls of another batsman(solved)
+
+3)done last ball wickets dissmissed another payer(solved)
+
+4) single player can fill both current batsman card.
+
+5) double popup on target chase.
