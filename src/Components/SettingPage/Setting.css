@@ -105,19 +105,40 @@
   height: 50%;
   width: 70%;
   margin-bottom: 1em;
-  /* display: flex; */
+  display: flex;
+  flex-wrap: wrap;
   /* flex-direction: column; */
-  /* background: rgb(244, 244, 140); */
-  /* justify-content: flex-start; */
-  /* align-items: center; */
+  /* padding-top: 1rem; */
+  /* background: red; */
+  justify-content: center;
+  /* align-items: flex-end; */
+  align-content: flex-start;
+  column-gap: 0.5rem;
+  row-gap: 0.5rem;
 }
-.popon {
+.player-item {
   background-color: var(--darkblue);
   color: white;
   font-weight: lighter;
-  padding: 0.1em 0.5em;
-  margin-bottom: 4px;
+  width: 42%;
+  height: 12%;
   text-align: center;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  padding-left: 1rem;
+  padding-right: 0.4rem;
+}
+.player-item > :nth-child(2) {
+  color: white;
+  width: 1.4rem;
+  background: var(--darkblue);
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+.player-item > :nth-child(2):hover {
+  background: white;
+  color: var(--darkblue);
 }
 
 .setting-right > :nth-child(3) {

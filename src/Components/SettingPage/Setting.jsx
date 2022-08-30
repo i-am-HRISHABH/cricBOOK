@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import "./Setting.css";
 import { useNavigate } from "react-router-dom";
-var main_index = 1;
 
 const Setting = (props) => {
   //useNavigate navigation
   let navigate = useNavigate();
+
   //STATES VARIABLES
   const [teamName, setTeamname] = useState("");
   const [toss, setToss] = useState("?");
@@ -51,6 +51,9 @@ const Setting = (props) => {
         teamNameValue: teamName,
         target: 4000,
       };
+      for (let i = 0; i < 11; i++) {
+        teamArray[i].id = i;
+      }
       props.appPlayerArray(teamArray, detailObj);
       if (selectedTo === "BAT") {
         props.indexSetter(1);
@@ -80,13 +83,28 @@ const Setting = (props) => {
     }
   };
 
+  //remove player
+  const removePlayer = (id) => {
+    let deletengindex;
+    let tempTeamArray = teamArray;
+    for (let i = 0; i < 11; i++) {
+      if (id === teamArray[i].id) {
+        deletengindex = i;
+        break;
+      }
+    }
+    // console.log("deleting index: " + deletengindex);
+    tempTeamArray.splice(deletengindex, 1);
+    setteamArray([...tempTeamArray]);
+  };
+
   // var main_index = 1;
   const addPlayer = (e) => {
     e.preventDefault();
     let playerName = document.getElementById("player-name-input");
-    let tempid = playerid;
-    setPlayerId(playerid + 1);
     if (teamArray.length <= 10 && playerName.value != "") {
+      let tempid = playerid;
+      setPlayerId(playerid + 1);
       let obj = {
         id: tempid,
         name: playerName.value,
@@ -102,10 +120,12 @@ const Setting = (props) => {
         runs_given: 0,
         wickets: 0,
       };
+      console.log(obj);
       setteamArray([...teamArray, obj]);
       playerName.value = "";
     } else {
       alert("11 player are already added.");
+      playerName.value = "";
     }
   };
 
@@ -151,10 +171,6 @@ const Setting = (props) => {
             </div>
             <div>
               <label htmlFor="toss">Toss :</label>
-              {/* <select name="toss" id="toss">
-                <option value="won">won</option>
-                <option value="lost">lost</option>
-              </select> */}
               <input
                 type="text"
                 name="toss"
@@ -164,14 +180,6 @@ const Setting = (props) => {
             </div>
             <div>
               <label htmlFor="selected">Seleted to :</label>
-              {/* <select
-                name="selected"
-                id="selected"
-                onChange={handleSelectedToChange}
-              >
-                <option value="to bat">batting</option>
-                <option value="to bowl">bowling</option>
-              </select> */}
               <input
                 type="text"
                 name="selected"
@@ -188,8 +196,15 @@ const Setting = (props) => {
           <div className="team">
             {teamArray.map((p) => {
               return (
-                <div className="popon" key={p.name}>
-                  {p.name}
+                <div className="player-item" key={p.id}>
+                  <div>{p.name}</div>
+                  <div
+                    onClick={() => {
+                      removePlayer(p.id);
+                    }}
+                  >
+                    -
+                  </div>
                 </div>
               );
             })}
