@@ -140,6 +140,7 @@ const Setting = (props) => {
               className="s-input"
               type="text"
               placeholder="team name"
+              maxLength={35}
               onChange={handleteamNameChange}
             />
           </form>
@@ -171,21 +172,31 @@ const Setting = (props) => {
             </div>
             <div>
               <label htmlFor="toss">Toss :</label>
-              <input
+              <select name="toss" onChange={handleTossChange}>
+                <option value="null">not selected</option>
+                <option value="won">won</option>
+                <option value="lost">lost</option>
+              </select>
+              {/* <input
                 type="text"
                 name="toss"
                 placeholder="won/lost"
                 onChange={handleTossChange}
-              ></input>
+              ></input> */}
             </div>
             <div>
               <label htmlFor="selected">Seleted to :</label>
-              <input
+              <select name="selected" onChange={handleSelectedToChange}>
+                <option value="null">not selected</option>
+                <option value="bat">bat</option>
+                <option value="bowl">bowl</option>
+              </select>
+              {/* <input
                 type="text"
                 name="selected"
                 placeholder="bat/bowl"
                 onChange={handleSelectedToChange}
-              ></input>
+              ></input> */}
             </div>
           </form>
         </div>
