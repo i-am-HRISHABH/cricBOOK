@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import CurrentBatsman from "../CurrentBatsman/CurrentBatsman";
+import EventButton from "../EventButtons/EventButton";
 import "./Batting.css";
 import { useNavigate } from "react-router-dom";
 
@@ -525,9 +526,13 @@ const Batting = (props) => {
             </div>
           </div>
           <div className="bat-heading">Event</div>
-          <div className="bat-buttons" onClick={eventButtonClick}>
-            <div className="bat-button-group">
-              <button className="bat-button">0</button>
+          {/* <div className="bat-buttons" onClick={eventButtonClick}> */}
+          <div className="bat-buttons">
+            <EventButton eventhandlerFunction={eventButtonClick} />
+          </div>
+
+          {/* <div className="bat-button-group"> */}
+          {/* <button className="bat-button">0</button>
               <button className="bat-button">1</button>
               <button className="bat-button">2</button>
               <button className="bat-button">3</button>
@@ -555,9 +560,9 @@ const Batting = (props) => {
               <button className="bat-button">nb3</button>
               <button className="bat-button">nb4</button>
               <button className="bat-button">nb6</button>
-              <button className="bat-button bat-supreme-button">wdwk</button>
-            </div>
-          </div>
+              <button className="bat-button bat-supreme-button">wdwk</button> */}
+          {/* </div> */}
+          {/* </div> */}
         </div>
       </div>
       <div className="bat-footer">

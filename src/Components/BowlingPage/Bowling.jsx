@@ -3,6 +3,7 @@ import "./Bowling.css";
 import CurrentBowler from "./CurrentBowler";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import EventButton from "../EventButtons/EventButton";
 
 const ploya = [
   {
@@ -496,8 +497,9 @@ const Bowling = (props) => {
             />
           </div>
           <div className="bat-heading">events</div>
-          <div className="bat-buttons" onClick={eventButtonClicked}>
-            <div className="bat-button-group">
+          <div className="bat-buttons">
+            <EventButton eventhandlerFunction={eventButtonClicked} />
+            {/* <div className="bat-button-group">
               <button className="bat-button">0</button>
               <button className="bat-button">1</button>
               <button className="bat-button">2</button>
@@ -527,7 +529,7 @@ const Bowling = (props) => {
               <button className="bat-button">nb4</button>
               <button className="bat-button">nb6</button>
               <button className="bat-button bat-supreme-button">wdwk</button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

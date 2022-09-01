@@ -247,7 +247,7 @@ const Stats = (props) => {
                 {p.name.toUpperCase()}
               </div>
               <div className="st-bover">
-                {p.overs}.{p.balls_bowled < 6 ? p.balls_bowled : 0}
+                {p.overs}.{p.balls_bowled % 6}
               </div>
               <div className="st-bwicket">{p.wickets}</div>
               <div className="st-bruns">{p.runs_given}</div>

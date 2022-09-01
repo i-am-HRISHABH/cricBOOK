@@ -1,0 +1,54 @@
+.eb-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: fit-content;
+}
+.eb-btn {
+  height: 5rem;
+  width: 5rem;
+  border: none;
+  background: white;
+  box-shadow: -2px 5px 10px 0.5px rgba(0, 0, 0, 0.15);
+  color: var(--darkblue);
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+.eb-btn:hover {
+  background: var(--darkblue);
+  color: white;
+  font-size: 1.8rem;
+}
+.eb-wrapper > :nth-child(1) {
+  display: flex;
+  gap: 2rem;
+}
+.eb-wrapper > :nth-child(2) {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+.eb-btn-select {
+  position: relative;
+}
+
+.eb-btn-select :nth-child(2) {
+  border: none;
+  width: 1.1rem;
+  align-self: baseline;
+  position: absolute;
+  color: white;
+  background: var(--darkblue);
+  bottom: 0;
+  right: 0;
+}
+.eb-premium-btn {
+  background: white;
+  color: var(--pinkred);
+}
+.eb-premium-btn:hover {
+  color: white;
+  background: var(--pinkred);
+  font-size: 1.8rem;
+}
